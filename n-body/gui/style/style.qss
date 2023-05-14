@@ -1,0 +1,41 @@
+*{
+    margin:0px;
+    padding:0px;
+    font-size: 14px;
+    background-color: #252030;
+    color:white;
+}
+QLabel{
+    font-size: 16px;
+}
+QWidget{
+    margin:0px;
+    padding:0px;
+}
+QPushButton{
+    padding:0.5em;
+    background-color: #303040;
+}
+QComboBox{
+    padding:15px;
+    background-color: #303040;
+    color: white;
+    border: none;
+    selection-border:none;
+    selection-color: white;
+}
+QComboBox::item {
+    padding:1em;
+}
+QDoubleSpinBox {
+    border: 1px solid #303040;
+    background-color: #303040;
+    border-radius: 3px;
+    padding: 0.4em;
+    min-width: 6em;
+}
+
+QDoubleSpinBox:hover, QDoubleSpinBox:focus {
+    border-color: #303060;
+}
+QDoubleSpinBox { selection-background-color: transparent;}
