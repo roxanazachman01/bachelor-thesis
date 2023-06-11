@@ -9,8 +9,9 @@ from utils.constants import *
 
 
 class SimulationWidget(QOpenGLWidget):
-    def __init__(self, parent, connection):
+    def __init__(self, connection, parent):
         super().__init__(parent=parent)
+        self.parent = parent
         self.__quadric = gluNewQuadric()
         gluQuadricNormals(self.__quadric, GLU_SMOOTH)
         gluQuadricTexture(self.__quadric, GL_TRUE)
@@ -30,6 +31,7 @@ class SimulationWidget(QOpenGLWidget):
             self.colors = message['colors']
             self.masses = message['masses']
         else:
+            self.parent.stop_loading_signal.emit()
             self.positions = message['position']
             self.velocities = message['velocity']
             self.update()
@@ -73,12 +75,15 @@ class SimulationWidget(QOpenGLWidget):
 
     def draw_bodies(self):
         num_bodies = len(self.positions) if self.positions is not None else 0
-        for i in range(num_bodies):
-            glColor3f(*self.colors[i])
-            glPushMatrix()
-            glTranslatef(*self.positions[i])
-            gluSphere(self.__quadric, self.masses[i] ** (1 / 3), 5, 5)
-            glPopMatrix()
+        try:
+            for i in range(num_bodies):
+                glColor3f(*self.colors[i])
+                glPushMatrix()
+                glTranslatef(*self.positions[i])
+                gluSphere(self.__quadric, 2 * self.masses[i] ** (1 / 3), 5, 5)
+                glPopMatrix()
+        except Exception as e:
+            print(e)
 
     def resizeGL(self, width, height):
         glViewport(0, 0, width, height)

@@ -12,12 +12,12 @@ from models.model_code import SimulatorModel
 
 
 class GNN(SimulationAlgorithm):
-    def __init__(self, connection, file_path, dt, dim, device):
+    def __init__(self, connection, content, dt, device):
         self.__data = None
-        super().__init__(connection, file_path, dt, dim, device)
+        super().__init__(connection, content, dt, device)
 
     def _load_file(self):
-        self.__data, self._mass = Preprocessor.get(self._file_path, dt=self._dt, device=self._device)
+        self.__data, self._mass = Preprocessor.get(self._content, dt=self._dt, device=self._device)
 
         self._r = self.__data.x[:, :self._dim]
         # self._v = self.__data.x[:, self._dim:2 * self._dim]
@@ -32,7 +32,8 @@ class GNN(SimulationAlgorithm):
 
         # state_dict = torch.load(os.path.join(os.path.join(os.getcwd(), 'models', 'model_state_dict.pth')),
         #                         map_location=torch.device('cpu'))
-        state_dict = torch.load(os.path.join(os.path.join(os.getcwd(), 'models', 'model_state_dict.pth')))
+        state_dict = torch.load(os.path.join(os.path.join(os.getcwd(), 'models', 'model_state_dict.pth')),
+                                map_location=torch.device(self._device))
         model.load_state_dict(state_dict)
         model.eval()
         try:

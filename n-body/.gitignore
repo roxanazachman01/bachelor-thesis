@@ -1,2 +1,3 @@
 /.idea/**
 /star_cluster/**
+__pycache__/

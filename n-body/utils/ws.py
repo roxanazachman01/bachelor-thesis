@@ -1,5 +1,7 @@
 import json
 
+from utils.csv import CsvUtils
+
 
 class WebsocketMessage:
     @staticmethod
@@ -14,13 +16,12 @@ class WebsocketMessage:
         return {'type': 1, 'position': position, 'velocity': velocity}
 
     @staticmethod
-    def create(algo="", path="", dt=0.005, dim=3, processor='CPU'):
+    def create(algo="", path="", dt=0.005, processor='CPU'):
+        content = [] if len(path) == 0 else CsvUtils.read_data(path).tolist()
         data = {
-            "active": True,
             "algo": algo,
-            "path": path,
+            "content": content,
             "dt": dt,
-            "dim": dim,
             "processor": processor
         }
         return json.dumps(data)

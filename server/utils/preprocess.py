@@ -1,10 +1,8 @@
-
 import torch
 
 from torch_geometric.data import Data
 
 from utils.constants import G
-from utils.csv import CsvUtils
 
 
 class Preprocessor:
@@ -43,9 +41,10 @@ class Preprocessor:
         return nodes_r, nodes_v, acceleration, edges, nodes_mass
 
     @staticmethod
-    def get(path, dt=0.005, steps=4, device=torch.device('cpu')):
-        raw_data = CsvUtils.read_data(path, device)
-        nodes_r, nodes_v, acceleration, edges, mass = Preprocessor.__simulate(raw_data, dt=dt, steps=steps, device=device)
+    def get(content, dt=0.005, steps=4, device=torch.device('cpu')):
+        raw_data = torch.tensor(content, dtype=torch.double, device=device)
+        nodes_r, nodes_v, acceleration, edges, mass = Preprocessor.__simulate(raw_data, dt=dt, steps=steps,
+                                                                              device=device)
 
         num_particles = len(raw_data)
 

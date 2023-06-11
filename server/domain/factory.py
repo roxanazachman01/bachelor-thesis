@@ -14,20 +14,20 @@ class AlgorithmFactory:
         self.__run_task = asyncio.create_task(self.__strategy.run())
 
     def start_algorithm(self, message):
-        active, algo, path, dt, dim, processor = WebsocketMessage.get(message)
+        algo, content, dt, processor = WebsocketMessage.get(message)
         device = torch.device('cuda' if torch.cuda.is_available() and processor == 'GPU' else 'cpu')
         self.__strategy.stop()
         self.__run_task.cancel()
         # try:
-        self.__strategy = self.__get(algo, path, dt, dim, device)
+        self.__strategy = self.__get(algo, content, dt, device)
         self.__run_task = asyncio.create_task(self.__strategy.run())
         # except Exception:
         #     print("Invalid data")
 
-    def __get(self, algo="", path="", dt=0.005, dim=3, device=torch.device('cpu')):
+    def __get(self, algo="", content="", dt=0.005, device=torch.device('cpu')):
         if algo == 1:
-            return DirectSymplecticEuler(self.__conn, path, dt, dim, device)
+            return DirectSymplecticEuler(self.__conn, content, dt, device)
         elif algo == 2:
-            return GNN(self.__conn, path, dt, dim, device)
+            return GNN(self.__conn, content, dt, device)
         else:
             return NullAlgorithm(self.__conn)

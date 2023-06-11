@@ -12,6 +12,7 @@ from utils.ws import WebsocketMessage
 class MenuWidget(QWidget):
     def __init__(self, connection, parent):
         super().__init__(parent=parent)
+        self.parent = parent
         self.connection = connection
         self.layout = QVBoxLayout(self)
         self.setLayout(self.layout)
@@ -42,6 +43,7 @@ class MenuWidget(QWidget):
 
             self.connection.connection.send(
                 WebsocketMessage.create(algo=algorithm, path=file_path, dt=dt, processor=processor))
+            self.parent.start_loading_signal.emit()
         except WebSocketConnectionClosedException:
             QMessageBox.warning(self, "Warning", "Connection is down! Reconnecting...", QMessageBox.Ok)
             self.connection.start()
@@ -49,5 +51,6 @@ class MenuWidget(QWidget):
     def stop_simulation(self):
         try:
             self.connection.connection.send(WebsocketMessage.create())
+            self.parent.stop_loading_signal.emit()
         except WebSocketConnectionClosedException:
             self.connection.start()

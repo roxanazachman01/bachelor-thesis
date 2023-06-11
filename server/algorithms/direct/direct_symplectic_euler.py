@@ -9,8 +9,8 @@ from utils.websocket import WebsocketMessage
 
 
 class DirectSymplecticEuler(SimulationAlgorithm):
-    def __init__(self, connection, file_path, dt, dim, device):
-        super().__init__(connection, file_path, dt, dim, device)
+    def __init__(self, connection, content, dt, device):
+        super().__init__(connection, content, dt, device)
 
     async def run(self):
         try:

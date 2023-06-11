@@ -5,8 +5,7 @@ class WebsocketMessage:
     @staticmethod
     def get(json_string):
         json_obj = json.loads(json_string)
-        return json_obj['active'], json_obj['algo'], json_obj['path'], json_obj['dt'], json_obj['dim'], json_obj[
-            'processor']
+        return json_obj['algo'], json_obj['content'], json_obj['dt'], json_obj['processor']
 
     @staticmethod
     def create(position=None, velocity=None, masses=None, colors=None):

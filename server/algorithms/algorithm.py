@@ -1,18 +1,15 @@
 from random import randint
 
 import torch
-import websockets.exceptions
-
-from utils.csv import CsvUtils
 
 
 class SimulationAlgorithm:
     # file path for a file having format (position vector, velocity vector, mass) - 2d: 5 values, 3d: 7 values
-    def __init__(self, connection, file_path, dt=0.005, dim=3, device=torch.device('cpu')):
+    def __init__(self, connection, content, dt=0.005, device=torch.device('cpu')):
         self._conn = connection
-        self._file_path = file_path
+        self._content = content
         self._dt = dt
-        self._dim = dim
+        self._dim = 3
         self._num_particles = 0
         self._r = None
         self._v = None
@@ -25,7 +22,7 @@ class SimulationAlgorithm:
         self._generate_colors()
 
     def _load_file(self):
-        tensor = CsvUtils.read_data(self._file_path, self._device)
+        tensor = torch.tensor(self._content, dtype=torch.double, device=self._device)
 
         self._r = tensor[:, :self._dim]
         self._v = tensor[:, self._dim:2 * self._dim]
@@ -43,7 +40,7 @@ class SimulationAlgorithm:
 
     def _generate_colors(self):
         for _ in range(self._num_particles):
-            color = (randint(150, 255) / 255.0, randint(50, 100) / 255.0, randint(150, 255) / 255.0)
+            color = (randint(187, 255) / 255.0, randint(63, 100) / 255.0, randint(187, 255) / 255.0)
             self._colors.append(color)
 
 
