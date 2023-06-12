@@ -1,6 +1,7 @@
 import asyncio
 import json
 
+import torch
 import websockets as websockets
 
 from domain.factory import AlgorithmFactory
