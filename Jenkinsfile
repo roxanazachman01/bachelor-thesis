@@ -4,6 +4,9 @@ pipeline {
             label 'docker-agent-python2'
             }
       }
+    triggers {
+        pollSCM '* * * * *'
+    }
     stages {
         stage('Build') {
             steps {
@@ -17,8 +20,9 @@ pipeline {
             steps {
                 echo "Testing.."
                 sh '''
-                echo "doing test stuff.."
-                '''
+			cd server
+			python -m unittest discover -s tests -p "*_test.py"
+		'''
             }
         }
         stage('Deliver') {
