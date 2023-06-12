@@ -29,7 +29,7 @@ pipeline {
             steps {
                 echo 'Deliver....'
                 sh '''
-                echo "doing delivery stuff.."
+                	python3 server/main.py &
                 '''
             }
         }
