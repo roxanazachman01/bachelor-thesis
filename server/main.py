@@ -28,7 +28,7 @@ async def handle_client(websocket, path):
 
 
 async def start_server():
-    async with websockets.serve(handle_client, "localhost", 8765):
+    async with websockets.serve(handle_client, "0.0.0.0", 8000):
         print("WebSocket server started")
         await asyncio.Future()
 
