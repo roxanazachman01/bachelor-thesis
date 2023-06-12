@@ -21,7 +21,7 @@ pipeline {
                 echo "Testing.."
                 sh '''
 			cd server
-			python -m unittest discover -s tests -p "*_test.py"
+			python3 -m unittest discover -s tests -p "*_test.py"
 		'''
             }
         }
