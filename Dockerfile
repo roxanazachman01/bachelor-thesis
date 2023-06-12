@@ -1,10 +1,12 @@
-FROM python:3.11
+FROM jenkins/agent:jdk11
 
-WORKDIR /usr/src/app
+USER root
 
-COPY server/requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
+RUN apt update
+RUN apt install -y python3
+RUN apt install -y python3-pip
+RUN apt install -y build-essential
+RUN apt install -y libffi-dev 
+RUN apt install -y libssl-dev
 
-COPY . .
-
-CMD [ "python", "./server/main.py" ]
+USER jenkins
