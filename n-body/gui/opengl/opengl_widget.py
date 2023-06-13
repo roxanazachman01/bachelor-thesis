@@ -19,7 +19,6 @@ class SimulationWidget(QOpenGLWidget):
         self.colors = []
         self.masses = []
         self.positions = []
-        self.velocities = []
         self.emitter = connection.emitter
         self.emitter.connect(self.handle_update)
         # self.timer = QTimer()
@@ -33,7 +32,6 @@ class SimulationWidget(QOpenGLWidget):
         else:
             self.parent.stop_loading_signal.emit()
             self.positions = message['position']
-            self.velocities = message['velocity']
             self.update()
 
     def initializeGL(self):

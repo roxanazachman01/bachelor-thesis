@@ -41,7 +41,7 @@ class WebsocketConnection(QThread):
             print(f"Exception in WebSocket thread: {e}")
 
     def run(self):
-        self.__connection = WebSocketApp("ws://localhost:8765",
+        self.__connection = WebSocketApp("ws://127.0.0.1:8000",
                                          on_message=self.on_message,
                                          on_error=self.on_error,
                                          on_close=self.on_close)

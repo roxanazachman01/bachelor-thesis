@@ -8,12 +8,11 @@ class WebsocketMessage:
     def get(json_string):
         json_obj = json.loads(json_string)
         position = json_obj["position"]
-        velocity = json_obj["velocity"]
         masses = json_obj["masses"]
         colors = json_obj["colors"]
         if colors is not None and masses is not None:
             return {'type': 0, 'colors': colors, 'masses': masses}
-        return {'type': 1, 'position': position, 'velocity': velocity}
+        return {'type': 1, 'position': position}
 
     @staticmethod
     def create(algo="", path="", dt=0.005, processor='CPU'):

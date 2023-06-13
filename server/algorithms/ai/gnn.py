@@ -47,6 +47,6 @@ class GNN(SimulationAlgorithm):
                     self._v = x[:, self._dim:2 * self._dim]
                     end_time = time.perf_counter_ns()
                     print(f"Computing: {(end_time - start_time) / 1e9:.4f} s")
-                    await self._conn.send(WebsocketMessage.create(self._r, self._v))
+                    await self._conn.send(WebsocketMessage.create(position=self._r))
         except websockets.exceptions.WebSocketException as e:
             pass

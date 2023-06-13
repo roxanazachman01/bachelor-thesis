@@ -48,6 +48,6 @@ class DirectSymplecticEuler(SimulationAlgorithm):
                 self._r += self._v * self._dt
                 end_time = time.perf_counter_ns()
                 print(f"Computing: {(end_time - start_time) / 1e9:.4f} s")
-                await self._conn.send(WebsocketMessage.create(position=self._r, velocity=self._v))
+                await self._conn.send(WebsocketMessage.create(position=self._r))
         except websockets.exceptions.WebSocketException as e:
             pass
